@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Vendas Demo · Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+
+        <!-- Cabeçalho fixo -->
+        <header class="main-header">
+            <div class="header-brand">
+                <div class="brand-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <h1>Gestão de Vendas Demo</h1>
+            </div>
+            <div class="header-meta">
+                <span class="header-badge">Demo Local</span>
+                <span id="header-clock" class="header-clock"></span>
+            </div>
+        </header>
+
+        <!-- Tela inicial -->
+        <div id="initial-view" class="view active">
+            <div class="dashboard-container">
+                <div class="welcome-banner">
+                    <div class="welcome-text">
+                        <p class="welcome-label">Bem-vindo à demonstração</p>
+                        <h2 class="welcome-title">O que deseja testar hoje?</h2>
+                    </div>
+                </div>
+                <p class="demo-note">Versão demonstrativa com dados salvos localmente no navegador.</p>
+                <div class="action-cards">
+                    <div class="action-card card-primary">
+                        <div class="card-icon-wrap primary-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <h3>Dia Atual</h3>
+                        <p>Gerencie as operações do dia de hoje</p>
+                        <div class="card-buttons">
+                            <button id="start-day-btn" class="action-button primary">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                                Iniciar Novo Dia
+                            </button>
+                            <button id="continue-day-btn" class="action-button secondary">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Continuar Dia
+                            </button>
+                        </div>
+                    </div>
+                    <div class="action-card card-secondary">
+                        <div class="card-icon-wrap secondary-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        </div>
+                        <h3>Histórico</h3>
+                        <p>Consulte e analise os dias anteriores</p>
+                        <div class="card-buttons">
+                            <button id="view-previous-btn" class="action-button outline">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+                                Ver Dias Anteriores
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard do dia atual (operacional) -->
+        <div id="dashboard-view" class="view">
+            <header class="view-header">
+                <div class="view-header-left">
+                    <h2>Painel do Dia</h2>
+                    <span id="dashboard-date" class="view-date"></span>
+                </div>
+                <div class="view-header-actions">
+                    <button id="finish-day-btn" class="btn btn-warning">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Finalizar Dia
+                    </button>
+                    <button id="back-to-initial" class="btn btn-ghost">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                        Voltar
+                    </button>
+                </div>
+            </header>
+
+            <!-- Indicadores -->
+            <div class="indicators">
+                <div class="metric-card">
+                    <div class="metric-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        Total Frangos
+                    </div>
+                    <span id="total-chickens" class="metric-value">0</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        Disponíveis
+                    </div>
+                    <span id="available-chickens" class="metric-value accent-blue">0</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                        Vendidos
+                    </div>
+                    <span id="sold-chickens" class="metric-value accent-green">0</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/></svg>
+                        Retirados
+                    </div>
+                    <span id="collected-chickens" class="metric-value accent-purple">0</span>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                        Na Loja
+                    </div>
+                    <span id="in-shop-chickens" class="metric-value accent-amber">0</span>
+                </div>
+                <div class="metric-card metric-highlight">
+                    <div class="metric-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        Receita Total
+                    </div>
+                    <span id="total-money" class="metric-value accent-green">R$ 0,00</span>
+                </div>
+            </div>
+
+            <!-- Contadores de pendências -->
+            <div class="pending-counters">
+                <div class="pending-header">
+                    <span class="pending-title">Pendências Ativas</span>
+                    <span class="pending-badge" id="pending-total">0</span>
+                </div>
+                <div class="counter-tags">
+                    <span class="counter-tag payment">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        Pagamento <strong id="pending-payment">0</strong>
+                    </span>
+                    <span class="counter-tag delivery">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        Entrega <strong id="pending-delivery">0</strong>
+                    </span>
+                    <span class="counter-tag pickup">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Retirada <strong id="pending-pickup">0</strong>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Encomendas pendentes por tamanho -->
+            <div class="pending-counters" style="margin-top:8px">
+                <div class="pending-header">
+                    <span class="pending-title">Encomendas Pendentes</span>
+                </div>
+                <div class="counter-tags" style="flex-wrap:wrap;gap:6px">
+                    <span class="counter-tag" style="opacity:0.5;font-size:11px;align-self:center">Feijão:</span>
+                    <span class="counter-tag pickup">P <strong id="enc-feijao-p">0</strong></span>
+                    <span class="counter-tag pickup">M <strong id="enc-feijao-m">0</strong></span>
+                    <span class="counter-tag pickup">G <strong id="enc-feijao-g">0</strong></span>
+                    <span class="counter-tag" style="opacity:0.5;font-size:11px;align-self:center;margin-left:6px">Salpicão:</span>
+                    <span class="counter-tag delivery">P <strong id="enc-salp-p">0</strong></span>
+                    <span class="counter-tag delivery">M <strong id="enc-salp-m">0</strong></span>
+                    <span class="counter-tag delivery">G <strong id="enc-salp-g">0</strong></span>
+                </div>
+            </div>
+
+            <div class="orders-toolbar">
+                <button id="new-order-btn" class="btn btn-primary btn-lg">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Novo Pedido
+                </button>
+            </div>
+
+            <div class="orders-container">
+                <div class="orders-section">
+                    <div class="section-header">
+                        <div class="section-dot pending-dot"></div>
+                        <h3>Pedidos Pendentes</h3>
+                    </div>
+                    <div id="pending-orders-list" class="orders-list"></div>
+                </div>
+                <div class="orders-section">
+                    <div class="section-header">
+                        <div class="section-dot finished-dot"></div>
+                        <h3>Pedidos Finalizados</h3>
+                    </div>
+                    <div id="finished-orders-list" class="orders-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Página de Relatório (apenas leitura) -->
+        <div id="report-view" class="view">
+            <header class="view-header">
+                <div class="view-header-left">
+                    <h2>Relatório do Dia</h2>
+                    <span id="report-day-date" class="view-date"></span>
+                </div>
+                <div class="view-header-actions">
+                    <button id="close-report" class="btn btn-ghost">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                        Voltar
+                    </button>
+                </div>
+            </header>
+
+            <!-- KPIs do relatório -->
+            <div class="report-kpis">
+                <div class="kpi-card kpi-revenue">
+                    <div class="kpi-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Receita Total</span>
+                        <span id="report-total-money" class="kpi-value">R$ 0,00</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Total de Pedidos</span>
+                        <span id="report-total-orders" class="kpi-value">0</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Frangos Vendidos</span>
+                        <span id="report-sold-chickens" class="kpi-value">0</span>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-label">Frangos Retirados</span>
+                        <span id="report-collected-chickens" class="kpi-value">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo de produtos (inserido via JS) -->
+            <div id="report-product-summary-wrapper"></div>
+
+            <!-- Tabela de pedidos -->
+            <div class="report-table-wrap">
+                <div class="report-table-header">
+                    <h3>Detalhamento de Pedidos</h3>
+                </div>
+                <div class="table-scroll">
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Itens</th>
+                                <th>Tipo</th>
+                                <th>Valor</th>
+                                <th>Pagamento</th>
+                                <th>Status</th>
+                                <th>Horário</th>
+                            </tr>
+                        </thead>
+                        <tbody id="report-orders-body">
+                            <!-- preenchido via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="report-total-line">
+                <div class="total-line-inner">
+                    <span class="total-label">TOTAL DO DIA</span>
+                    <span class="total-value">R$ <span id="report-grand-total">0,00</span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de dias anteriores (histórico) -->
+        <div id="previous-days-view" class="view">
+            <header class="view-header">
+                <div class="view-header-left">
+                    <h2>Dias Anteriores</h2>
+                    <span class="view-date">Histórico completo</span>
+                </div>
+                <button id="back-from-previous" class="btn btn-ghost">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                    Voltar
+                </button>
+            </header>
+            <div id="days-list" class="days-list"></div>
+        </div>
+
+        <!-- ===================== MODAIS ===================== -->
+
+        <!-- Modal para iniciar dia -->
+        <div id="modal-start-day" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon modal-icon-blue">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3>Iniciar Novo Dia</h3>
+                </div>
+                <div class="modal-body">
+                    <label>Quantidade total de frangos</label>
+                    <input type="number" id="total-chickens-input" min="1" value="10" placeholder="Ex: 100">
+                </div>
+                <div class="modal-actions">
+                    <button id="cancel-start" class="btn btn-ghost">Cancelar</button>
+                    <button id="confirm-start" class="btn btn-primary">Iniciar Dia</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para novo pedido -->
+        <div id="modal-order" class="modal">
+            <div class="modal-content large">
+                <div class="modal-header">
+                    <div class="modal-icon modal-icon-blue">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </div>
+                    <h3>Novo Pedido</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="order-form">
+                        <div class="form-group">
+                            <label>Nome do Cliente</label>
+                            <input type="text" id="customer-name" required placeholder="Digite o nome do cliente">
+                        </div>
+
+                        <div class="form-section-label">Produtos</div>
+                        <div id="products-container"></div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tipo de Pedido</label>
+                                <select id="order-type" required>
+                                    <option value="pickup">Retirada</option>
+                                    <option value="delivery">Entrega</option>
+                                    <option value="in-store">Consumo local</option>
+                                    <option value="fiado">Anotar / Fiado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status Pagamento</label>
+                                <select id="payment-status">
+                                    <option value="pending">Pendente</option>
+                                    <option value="paid">Pago</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="delivery-fields" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Taxa de Entrega (R$)</label>
+                                    <input type="text" id="delivery-fee" inputmode="numeric" placeholder="0,00">
+                                </div>
+                                <div class="form-group">
+                                    <label>Endereço</label>
+                                    <input type="text" id="address" placeholder="Rua, número, bairro">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-total-display">
+                            <span class="total-display-label">Total do Pedido</span>
+                            <span class="total-display-value">R$ <span id="order-total">0,00</span></span>
+                        </div>
+
+                        <div id="delivery-status-block" style="display: none;">
+                            <div class="form-group">
+                                <label>Status Entrega</label>
+                                <select id="delivery-status">
+                                    <option value="pending">Pendente</option>
+                                    <option value="delivered">Entregue</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="pickup-status-block" style="display: none;">
+                            <div class="form-group">
+                                <label>Status Retirada</label>
+                                <select id="pickup-status">
+                                    <option value="pending">Pendente</option>
+                                    <option value="ok">OK</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-section-label">Outros (opcional)</div>
+                        <div id="outros-list"></div>
+                        <button type="button" id="add-outro-btn" class="btn-add-outro">+ Adicionar outro</button>
+
+                        <input type="hidden" id="order-status" value="pending">
+
+                        <div class="modal-actions">
+                            <button type="button" id="cancel-order" class="btn btn-ghost">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar Pedido</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar pedido (formulário completo) -->
+        <div id="modal-edit-order" class="modal">
+            <div class="modal-content large">
+                <div class="modal-header">
+                    <div class="modal-icon modal-icon-amber">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </div>
+                    <h3>Editar Pedido</h3>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-order-form">
+                        <input type="hidden" id="edit-order-id">
+
+                        <div class="form-group">
+                            <label>Nome do Cliente</label>
+                            <input type="text" id="edit-customer-name-input" required placeholder="Nome do cliente">
+                        </div>
+
+                        <div class="form-section-label">Produtos</div>
+                        <div id="edit-products-container"></div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Tipo de Pedido</label>
+                                <select id="edit-order-type" required>
+                                    <option value="pickup">Retirada</option>
+                                    <option value="delivery">Entrega</option>
+                                    <option value="in-store">Consumo local</option>
+                                    <option value="fiado">Anotar / Fiado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status Pagamento</label>
+                                <select id="edit-payment-status">
+                                    <option value="pending">Pendente</option>
+                                    <option value="paid">Pago</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="edit-delivery-fields" style="display: none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Taxa de Entrega (R$)</label>
+                                    <input type="text" id="edit-delivery-fee" inputmode="numeric" placeholder="0,00">
+                                </div>
+                                <div class="form-group">
+                                    <label>Endereço</label>
+                                    <input type="text" id="edit-address" placeholder="Rua, número, bairro">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="order-total-display">
+                            <span class="total-display-label">Total do Pedido</span>
+                            <span class="total-display-value">R$ <span id="edit-order-total-display">0,00</span></span>
+                        </div>
+
+                        <div id="edit-delivery-status-block" style="display: none;">
+                            <div class="form-group">
+                                <label>Status Entrega</label>
+                                <select id="edit-delivery-status">
+                                    <option value="pending">Pendente</option>
+                                    <option value="delivered">Entregue</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div id="edit-pickup-status-block" style="display: none;">
+                            <div class="form-group">
+                                <label>Status Retirada</label>
+                                <select id="edit-pickup-status">
+                                    <option value="pending">Pendente</option>
+                                    <option value="ok">OK</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-section-label">Outros (opcional)</div>
+                        <div id="edit-outros-list"></div>
+                        <button type="button" id="edit-add-outro-btn" class="btn-add-outro">+ Adicionar outro</button>
+
+                        <div class="modal-actions">
+                            <button type="button" id="cancel-edit-order" class="btn btn-ghost">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar Pedido</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para editar dia -->
+        <div id="modal-edit-day" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon modal-icon-amber">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </div>
+                    <h3>Editar Dia</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Total de Frangos</label>
+                        <input type="number" id="edit-total-chickens" min="1" placeholder="Quantidade total">
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button id="cancel-edit" class="btn btn-ghost">Cancelar</button>
+                    <button id="confirm-edit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Clock
+        function updateClock() {
+            const el = document.getElementById('header-clock');
+            if (!el) return;
+            const now = new Date();
+            el.textContent = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
